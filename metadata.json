@@ -1,0 +1,6 @@
+{
+  "name": "Mecânico Rafa Moro - Oficina e Socorro 24h",
+  "description": "Oficina mecânica, elétrica automotiva e socorro 24 horas em Santo Antônio da Patrulha - RS. Especialista em manutenção preventiva, corretiva e emergência.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
