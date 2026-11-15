@@ -4,6 +4,7 @@ import { Hero } from './components/Hero';
 import { EmergencySection } from './components/EmergencySection';
 import { ServicesSection } from './components/ServicesSection';
 import { PartnersSection } from './components/PartnersSection';
+import { CompletedJobsSection } from './components/CompletedJobsSection';
 import { VideosSection } from './components/VideosSection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
@@ -28,7 +29,7 @@ export default function App() {
 
   // Listen to scroll to update active section in navbar
   useEffect(() => {
-    const sectionIds = ['inicio', 'servicos', 'socorro', 'parceiros', 'videos', 'contato'];
+    const sectionIds = ['inicio', 'servicos', 'socorro', 'parceiros', 'trabalhos', 'videos', 'contato'];
     
     const handleScroll = () => {
       const scrollPos = window.scrollY + 200;
@@ -78,6 +79,9 @@ export default function App() {
 
         {/* Partner Network Section (Towing, Hotels, Inns, Car Wash, Tires) */}
         <PartnersSection />
+
+        {/* Completed Daily Workshop Vehicles Showcase */}
+        <CompletedJobsSection />
 
         {/* Educational Video Library & Safety Advice */}
         <VideosSection />

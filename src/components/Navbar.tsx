@@ -19,6 +19,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, onNavigate }) => 
     { id: 'servicos', label: 'Serviços' },
     { id: 'socorro', label: 'Socorro 24h', isEmergency: true },
     { id: 'parceiros', label: 'Parceiros' },
+    { id: 'trabalhos', label: 'Serviços Já Feitos' },
     { id: 'videos', label: 'Vídeos e Dicas' },
     { id: 'contato', label: 'Contato' },
   ];
@@ -68,35 +69,35 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, onNavigate }) => 
 
       {/* Main navigation */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between gap-3 h-20 md:h-24">
+        <div className="flex items-center justify-between gap-2 xl:gap-3 h-20">
           {/* Logo Oficial em Escudo sem recorte */}
           <button
             onClick={() => handleLinkClick('inicio')}
-            className="flex items-center gap-2.5 sm:gap-3 text-left group focus:outline-none shrink-0"
+            className="flex items-center gap-2 text-left group focus:outline-none shrink-0"
             aria-label="Página Inicial Mecânico Rafa Moro"
           >
             <img
               src="/assets/aistudio/LOGO_RGB_6026b6ff.png"
               alt="Logo Oficial Mecânico Rafa Moro em Escudo"
-              className="h-14 sm:h-16 md:h-[72px] w-auto object-contain drop-shadow-[0_4px_12px_rgba(220,38,38,0.55)] transition-transform group-hover:scale-105"
+              className="h-12 sm:h-14 w-auto object-contain drop-shadow-[0_4px_12px_rgba(220,38,38,0.55)] transition-transform group-hover:scale-105"
             />
             <div className="hidden sm:block whitespace-nowrap">
-              <span className="block text-base xl:text-lg font-black text-white font-heading tracking-wider leading-tight">
+              <span className="block text-sm xl:text-base font-black text-white font-heading tracking-wide leading-tight">
                 MECÂNICO <span className="text-red-500">RAFA MORO</span>
               </span>
-              <span className="block text-[10px] text-yellow-400 font-bold uppercase tracking-wider mt-0.5">
+              <span className="block text-[9px] xl:text-[10px] text-yellow-400 font-bold uppercase tracking-wide mt-0.5">
                 Oficina Mecânica & Plantão 24h
               </span>
             </div>
           </button>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1">
+          <nav className="hidden lg:flex items-center gap-0.5 min-w-0">
             {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => handleLinkClick(item.id)}
-                className={`px-2 xl:px-2.5 py-2 text-xs font-black uppercase tracking-wider transition-all rounded-md relative whitespace-nowrap ${
+                className={`px-1.5 xl:px-2 py-2 text-[11px] xl:text-xs font-black uppercase tracking-normal xl:tracking-wide transition-all rounded-md relative whitespace-nowrap shrink-0 ${
                   activeSection === item.id
                     ? item.isEmergency
                       ? 'bg-red-600 text-white shadow-lg shadow-red-600/40'
@@ -109,17 +110,17 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, onNavigate }) => 
                 {item.isEmergency && <span className="inline-block mr-1 animate-pulse">🚨</span>}
                 {item.label}
                 {activeSection === item.id && !item.isEmergency && (
-                  <span className="absolute bottom-0 left-2 right-2 h-0.5 bg-yellow-400" />
+                  <span className="absolute bottom-0 left-1.5 right-1.5 h-0.5 bg-yellow-400" />
                 )}
               </button>
             ))}
           </nav>
 
           {/* CTA Buttons */}
-          <div className="hidden sm:flex items-center gap-2 shrink-0">
+          <div className="hidden sm:flex items-center gap-1.5 xl:gap-2 shrink-0">
             <button
               onClick={() => handleLinkClick('socorro')}
-              className="flex items-center gap-1.5 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-black text-xs uppercase tracking-wider px-3 py-2.5 rounded-md shadow-lg shadow-red-600/30 border border-red-500/50 hover:shadow-red-600/60 transition-all transform hover:-translate-y-0.5 whitespace-nowrap"
+              className="flex items-center gap-1.5 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-black text-[11px] xl:text-xs uppercase tracking-wide px-2.5 xl:px-3 py-2 rounded-md shadow-lg shadow-red-600/30 border border-red-500/50 hover:shadow-red-600/60 transition-all transform hover:-translate-y-0.5 whitespace-nowrap shrink-0"
             >
               <AlertTriangle className="w-4 h-4 text-yellow-300 animate-bounce shrink-0" />
               <span>SOCORRO 24H</span>
@@ -129,7 +130,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, onNavigate }) => 
               href={createWorkshopWhatsAppLink()}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider px-3 py-2.5 rounded-md shadow-md transition-all border border-emerald-400/40 whitespace-nowrap"
+              className="flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[11px] xl:text-xs uppercase tracking-wide px-2.5 xl:px-3 py-2 rounded-md shadow-md transition-all border border-emerald-400/40 whitespace-nowrap shrink-0"
               aria-label="Abrir WhatsApp Comercial Mecânico Rafa Moro"
             >
               <MessageCircle className="w-4 h-4 fill-white text-emerald-600 shrink-0" />

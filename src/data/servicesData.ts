@@ -37,7 +37,7 @@ export const AUTO_SERVICES: AutoService[] = [
       'Troca de válvula termostática e bomba d’água',
       'Limpeza de sistema e aditivo sintético de alta performance'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&w=800&q=80'
+    imageUrl: '/assets/servico-arrefecimento-vapor.jpg'
   },
   {
     id: 'mecanica-geral',
@@ -51,7 +51,7 @@ export const AUTO_SERVICES: AutoService[] = [
       'Reparo de cabeçote com junta de aço',
       'Troca de velas de ignição, cabos e bobinas'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1517524008697-84bbe3c3fd98?auto=format&fit=crop&w=800&q=80'
+    imageUrl: '/assets/servico-mecanica-motor.jpg'
   },
   {
     id: 'eletrica-injecao',
@@ -65,7 +65,7 @@ export const AUTO_SERVICES: AutoService[] = [
       'Revisão e recondicionamento de alternadores',
       'Limpeza e equalização de bicos injetores'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=800&q=80'
+    imageUrl: '/assets/servico-eletrica-diagrama.jpg'
   },
   {
     id: 'revisao-viagem',
@@ -79,7 +79,7 @@ export const AUTO_SERVICES: AutoService[] = [
       'Checagem de arrefecimento e lubrificação',
       'Relatório detalhado para o proprietário'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80',
+    imageUrl: '/assets/servico-revisao-elevacar.jpg',
     badge: 'RECOMENDADO'
   }
 ];

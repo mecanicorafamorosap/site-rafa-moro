@@ -61,6 +61,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 { id: 'servicos', label: 'Serviços Especializados' },
                 { id: 'socorro', label: '🚨 Socorro Emergencial 24h' },
                 { id: 'parceiros', label: 'Rede de Parceiros' },
+                { id: 'trabalhos', label: 'Serviços Já Feitos' },
                 { id: 'videos', label: 'Vídeos Educativos & Dicas' },
                 { id: 'contato', label: 'Localização & Contato' },
               ].map((link) => (
