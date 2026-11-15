@@ -165,10 +165,10 @@ export const PartnersSection: React.FC = () => {
                   src={partner.imageUrl}
                   alt={partner.title}
                   className={`w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ${
-                    partner.comingSoon ? 'opacity-65 grayscale-[35%]' : ''
+                    partner.comingSoon && !partner.imageHasStatusBanner ? 'opacity-65 grayscale-[35%]' : ''
                   }`}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/35 to-transparent" />
                 
                 {/* Category label */}
                 <div className="absolute top-3 left-3 bg-red-600 text-white font-black text-xs uppercase px-2.5 py-1 rounded shadow-md flex items-center gap-1.5 font-heading">
@@ -176,10 +176,10 @@ export const PartnersSection: React.FC = () => {
                   <span>{partner.categoryLabel}</span>
                 </div>
 
-                {/* EM BREVE badge */}
-                {partner.comingSoon && (
+                {/* EM BREVE badge (only when image doesn't already have its own notice banner) */}
+                {partner.comingSoon && !partner.imageHasStatusBanner && (
                   <div className="absolute bottom-3 left-3 bg-yellow-400 text-black font-black text-xs uppercase px-3 py-1 rounded-md shadow-lg tracking-wider font-heading">
-                    ⏳ EM BREVE
+                    {partner.comingSoonLabel || '⏳ EM BREVE'}
                   </div>
                 )}
 

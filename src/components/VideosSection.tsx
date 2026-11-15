@@ -10,11 +10,12 @@ import {
   ShieldAlert,
   HelpCircle,
   MessageCircle,
-  Share2
+  ExternalLink
 } from 'lucide-react';
 import {
   EducationalVideo,
-  EDUCATIONAL_VIDEOS,
+  VIDEO_CATEGORIES,
+  getVisibleVideoCategories,
   getStoredVideos,
   saveStoredVideos
 } from '../data/videosData';
@@ -32,14 +33,8 @@ export const VideosSection: React.FC = () => {
   const [newDesc, setNewDesc] = useState('');
   const [newUrl, setNewUrl] = useState('');
 
-  const categories = [
-    { id: 'todos', label: 'Todos os Vídeos' },
-    { id: 'arrefecimento', label: 'Arrefecimento (Cuidado!)' },
-    { id: 'oleo', label: 'Óleo do Motor' },
-    { id: 'bateria', label: 'Bateria & Elétrica' },
-    { id: 'pneus', label: 'Pneus & Calibragem' },
-    { id: 'mecanica', label: 'Mecânica Geral' },
-  ];
+  const categories = getVisibleVideoCategories(videos);
+  const allCategories = VIDEO_CATEGORIES;
 
   const filteredVideos =
     activeCategory === 'todos'
@@ -63,7 +58,7 @@ export const VideosSection: React.FC = () => {
     const created: EducationalVideo = {
       id: `custom-video-${Date.now()}`,
       category: newCategory,
-      categoryLabel: categories.find((c) => c.id === newCategory)?.label || 'DICA AUTOMOTIVA',
+      categoryLabel: allCategories.find((c) => c.id === newCategory)?.label || 'DICA AUTOMOTIVA',
       title: newTitle.trim(),
       duration: 'Dica do Rafa',
       description: newDesc.trim() || 'Vídeo educativo exclusivo gravado pelo Mecânico Rafa Moro.',
@@ -118,7 +113,7 @@ export const VideosSection: React.FC = () => {
                 NUNCA ABRA O RESERVATÓRIO DO SISTEMA DE ARREFECIMENTO COM O MOTOR QUENTE!
               </h3>
               <p className="text-xs sm:text-sm text-gray-200 leading-relaxed">
-                O sistema de arrefecimento trabalha sob pressurização de até 1.4 bar e temperaturas superiores a 90°C. Ao abrir a tampa com o motor aquecido, o líquido ferve instantaneamente e espirra vapor em alta pressão, provocando queimaduras gravíssimas de segundo e terceiro grau no rosto e nas mãos. Se notar temperatura alta, estacione no acostamento, desligue o motor e aguarde esfriar totalmente antes de qualquer inspeção!
+                O sistema de arrefecimento trabalha sob pressurização de aproximadamente 1.5 bar e temperaturas superiores a 90°C. Ao abrir a tampa imediatamente com o motor aquecido, o líquido ferve de forma súbita e espirra vapor e aditivo em alta pressão, provocando queimaduras extremamente graves no rosto e nas mãos. Se notar temperatura alta, estacione no acostamento, desligue o motor e aguarde esfriar totalmente antes de qualquer inspeção!
               </p>
             </div>
           </div>
@@ -163,6 +158,7 @@ export const VideosSection: React.FC = () => {
                 <img
                   src={vid.thumbnailUrl}
                   alt={vid.title}
+                  referrerPolicy="no-referrer"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100"
                 />
                 
@@ -205,7 +201,7 @@ export const VideosSection: React.FC = () => {
                     {vid.title}
                   </h3>
 
-                  <p className="text-xs text-gray-300 mt-2 line-clamp-2 leading-relaxed">
+                  <p className="text-xs text-gray-300 mt-2 line-clamp-2 group-hover:line-clamp-none group-focus-within:line-clamp-none leading-relaxed transition-all duration-300">
                     {vid.description}
                   </p>
 
@@ -213,7 +209,9 @@ export const VideosSection: React.FC = () => {
                   {vid.safetyWarning && (
                     <div className="mt-3 p-2 rounded bg-red-950/60 border border-red-600/60 text-red-300 text-[11px] font-semibold flex items-start gap-1.5">
                       <AlertTriangle className="w-3.5 h-3.5 text-yellow-400 shrink-0 mt-0.5" />
-                      <span className="line-clamp-2">{vid.safetyWarning}</span>
+                      <span className="line-clamp-2 group-hover:line-clamp-none group-focus-within:line-clamp-none">
+                        {vid.safetyWarning}
+                      </span>
                     </div>
                   )}
                 </div>
@@ -257,7 +255,7 @@ export const VideosSection: React.FC = () => {
                 <X className="w-6 h-6" />
               </button>
 
-              <div className="racing-border pb-3 mb-4">
+              <div className="racing-border pb-3 mb-4 pr-10">
                 <span className="text-xs text-yellow-400 font-bold uppercase block">
                   {activeVideoModal.categoryLabel}
                 </span>
@@ -267,12 +265,13 @@ export const VideosSection: React.FC = () => {
               </div>
 
               {/* Video Player or Embed */}
-              <div className="relative aspect-video rounded-xl overflow-hidden bg-black mb-4 border border-zinc-800">
+              <div className="relative aspect-video rounded-xl overflow-hidden bg-black mb-3 border border-zinc-800">
                 {activeVideoModal.videoUrl && activeVideoModal.videoUrl.includes('embed') ? (
                   <iframe
                     src={activeVideoModal.videoUrl}
                     title={activeVideoModal.title}
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    referrerPolicy="strict-origin-when-cross-origin"
                     allowFullScreen
                     className="w-full h-full"
                   />
@@ -293,6 +292,20 @@ export const VideosSection: React.FC = () => {
                 )}
               </div>
 
+              {activeVideoModal.videoUrl && activeVideoModal.videoUrl.includes('/embed/') && (
+                <div className="mb-4 flex justify-end">
+                  <a
+                    href={`https://youtu.be/${activeVideoModal.videoUrl.split('/embed/')[1]?.split('?')[0]}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-gray-400 hover:text-yellow-400 transition-colors"
+                  >
+                    <ExternalLink className="w-3.5 h-3.5" />
+                    <span>Abrir vídeo no YouTube</span>
+                  </a>
+                </div>
+              )}
+
               {/* Critical safety alert if this is about cooling */}
               {activeVideoModal.safetyWarning && (
                 <div className="p-3.5 mb-4 rounded-xl bg-red-950 border border-red-600 text-yellow-300 text-xs font-bold flex items-start gap-2">
@@ -301,8 +314,12 @@ export const VideosSection: React.FC = () => {
                 </div>
               )}
 
-              {/* Checklist & Key Takeaways */}
+              {/* Technical description & Checklist */}
               <div className="space-y-3">
+                <p className="text-xs sm:text-sm text-gray-200 leading-relaxed bg-zinc-900/70 border border-zinc-800 rounded-xl p-3.5">
+                  {activeVideoModal.description}
+                </p>
+
                 <h4 className="text-sm font-black font-heading text-white uppercase">
                   PASSO A PASSO & RECOMENDAÇÕES DO MECÂNICO RAFA MORO:
                 </h4>

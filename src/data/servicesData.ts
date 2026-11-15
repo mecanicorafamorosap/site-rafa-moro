@@ -22,7 +22,7 @@ export const AUTO_SERVICES: AutoService[] = [
       'Cobertura urbana e rodovias (BR-290 Freeway, RS-030)',
       'Articulação direta com guincho e rede de apoio'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&w=800&q=80',
+    imageUrl: '/assets/socorro-madrugada-scanner.jpg',
     badge: 'PLANTÃO 24H'
   },
   {

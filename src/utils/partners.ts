@@ -15,6 +15,8 @@ export interface Partner {
   brandsOrServices?: string[];
   imageUrl: string;
   comingSoon?: boolean;
+  comingSoonLabel?: string;
+  imageHasStatusBanner?: boolean;
 }
 
 export const DEFAULT_PARTNERS: Partner[] = [
@@ -43,43 +45,49 @@ export const DEFAULT_PARTNERS: Partner[] = [
     id: 'parceiro-hoteis',
     category: 'hotel',
     categoryLabel: 'PARCEIRO 2 — HOTÉIS',
-    title: '[Hotel Parceiro Conveniado]',
-    subtitle: 'Hospedagem confortável e segura para você e sua família enquanto cuidamos do seu carro',
-    phone: '[A preencher pelo proprietário]',
+    title: 'Hotel Parceiro — Aguardando Materiais (Em Breve)',
+    subtitle: 'Aguardando materiais oficiais do hotel conveniado — Em breve disponível',
+    phone: 'Em breve',
     whatsapp: '5551996347460',
-    address: '[Cadastre o endereço do hotel conveniado]',
+    address: 'Em breve — Santo Antônio da Patrulha - RS',
     city: 'Santo Antônio da Patrulha - RS',
-    mapsQuery: 'Hoteis Santo Antônio da Patrulha RS',
-    description: 'Espaço reservado para o hotel conveniado. Quartos climatizados, TV, Wi-Fi de alta velocidade, café da manhã e estacionamento privativo.',
-    pricingOrRate: 'Diárias sob consulta (condições especiais para clientes da oficina)',
+    mapsQuery: 'Santo Antônio da Patrulha RS',
+    description: 'Aguardando materiais de divulgação (fotos dos quartos, estrutura, tarifas e contato) do hotel parceiro em Santo Antônio da Patrulha. Em breve disponível aqui!',
+    specialOffer: 'AGUARDANDO MATERIAIS — EM BREVE',
+    pricingOrRate: 'Diárias e condições serão divulgadas em breve',
     brandsOrServices: [
       'Quartos individuais e familiares',
       'Estacionamento fechado',
       'Café da manhã incluso',
       'Check-in facilitado'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80'
+    imageUrl: '/assets/hotel-aguardando.jpg',
+    comingSoon: true,
+    imageHasStatusBanner: true
   },
   {
     id: 'parceiro-pousadas',
     category: 'pousada',
     categoryLabel: 'PARCEIRO 3 — POUSADAS',
-    title: '[Pousada Parceira]',
-    subtitle: 'Acolhimento serrano e tranquilidade em Santo Antônio da Patrulha',
-    phone: '[A preencher pelo proprietário]',
+    title: 'Pousada Parceira — Aguardando Materiais (Em Breve)',
+    subtitle: 'Aguardando materiais oficiais da pousada conveniada — Em breve disponível',
+    phone: 'Em breve',
     whatsapp: '5551996347460',
-    address: '[Cadastre o endereço da pousada]',
+    address: 'Em breve — Santo Antônio da Patrulha - RS',
     city: 'Santo Antônio da Patrulha - RS',
-    mapsQuery: 'Pousadas Santo Antônio da Patrulha RS',
-    description: 'Espaço reservado para cadastro de pousada parceira. Ambiente tranquilo, aconchegante e acolhedor para você descansar sem preocupações durante serviços mecânicos mais complexos.',
-    pricingOrRate: 'Valores especiais para motoristas em trânsito',
+    mapsQuery: 'Santo Antônio da Patrulha RS',
+    description: 'Aguardando materiais de divulgação (fotos, estrutura, tarifas e contato) da pousada parceira em Santo Antônio da Patrulha. Em breve disponível aqui!',
+    specialOffer: 'AGUARDANDO MATERIAIS — EM BREVE',
+    pricingOrRate: 'Valores e diárias serão divulgados em breve',
     brandsOrServices: [
       'Ambiente familiar e acolhedor',
       'Café da manhã colonial típico gaúcho',
       'Área verde e descanso',
       'Wi-Fi e comodidades'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=80'
+    imageUrl: '/assets/pousada-aguardando.jpg',
+    comingSoon: true,
+    imageHasStatusBanner: true
   },
   {
     id: 'parceiro-lavagem',
@@ -100,7 +108,7 @@ export const DEFAULT_PARTNERS: Partner[] = [
       'Limpeza técnica de motor com produtos neutros',
       'Revitalização de plásticos e pneus'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1601362840469-51e4d8d58785?auto=format&fit=crop&w=800&q=80'
+    imageUrl: '/assets/beck-studio-estetica.jpg'
   },
   {
     id: 'parceiro-pneus',
@@ -141,21 +149,45 @@ export function getStoredPartners(): Partner[] {
         ) {
           return { ...p, imageUrl: '/assets/guincho-plataforma.jpg' };
         }
-        if (
-          p.id === 'parceiro-lavagem' &&
-          p.title === 'Estética Automotiva & Lavagem Detalhada'
-        ) {
+        if (p.id === 'parceiro-lavagem') {
           const updatedLavagem = DEFAULT_PARTNERS.find((d) => d.id === 'parceiro-lavagem');
-          return updatedLavagem
-            ? {
-                ...p,
-                title: updatedLavagem.title,
-                subtitle: updatedLavagem.subtitle,
-                description: updatedLavagem.description,
-                specialOffer: updatedLavagem.specialOffer,
-                brandsOrServices: updatedLavagem.brandsOrServices,
-              }
-            : p;
+          const needsContentUpgrade = p.title === 'Estética Automotiva & Lavagem Detalhada';
+          const needsImageUpgrade = p.imageUrl.includes('photo-1601362840469-51e4d8d58785');
+          if (updatedLavagem && (needsContentUpgrade || needsImageUpgrade)) {
+            return {
+              ...p,
+              ...(needsContentUpgrade
+                ? {
+                    title: updatedLavagem.title,
+                    subtitle: updatedLavagem.subtitle,
+                    description: updatedLavagem.description,
+                    specialOffer: updatedLavagem.specialOffer,
+                    brandsOrServices: updatedLavagem.brandsOrServices,
+                  }
+                : {}),
+              ...(needsImageUpgrade ? { imageUrl: updatedLavagem.imageUrl } : {}),
+            };
+          }
+        }
+        if (p.id === 'parceiro-hoteis') {
+          const updatedHotel = DEFAULT_PARTNERS.find((d) => d.id === 'parceiro-hoteis');
+          if (
+            updatedHotel &&
+            (p.title === '[Hotel Parceiro Conveniado]' ||
+              p.imageUrl.includes('photo-1566073771259-6a8506099945'))
+          ) {
+            return updatedHotel;
+          }
+        }
+        if (p.id === 'parceiro-pousadas') {
+          const updatedPousada = DEFAULT_PARTNERS.find((d) => d.id === 'parceiro-pousadas');
+          if (
+            updatedPousada &&
+            (p.title === '[Pousada Parceira]' ||
+              p.imageUrl.includes('photo-1542314831-068cd1dbfeeb'))
+          ) {
+            return updatedPousada;
+          }
         }
         if (
           p.id === 'parceiro-pneus' &&
